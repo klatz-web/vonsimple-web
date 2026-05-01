@@ -12,6 +12,10 @@ const connectDB = async () => {
       useUnifiedTopology: true,
       connectTimeoutMS: 10000,
       serverSelectionTimeoutMS: 10000,
+      retryWrites: true,
+      w: "majority",
+      ssl: true,
+      tlsAllowInvalidCertificates: false,
     });
     console.log('MongoDB connected');
   } catch (error) {
