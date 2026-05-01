@@ -17,10 +17,14 @@
   ```bash
   npm start
   ```
-- Production mode:
-  ```bash
-  npm start
-  ```
+
+## Render deployment
+- Set your Render environment variables:
+  - `MONGO_URI` = your MongoDB connection string
+  - `JWT_SECRET` = your JWT secret
+- Do not deploy with `mongodb://127.0.0.1:27017/iceearring` on Render.
+- The backend needs a real Atlas/Mongo URI in production.
+
 
 > Important: The frontend must be accessed through the backend at `http://localhost:5000` for signup/login and product loading to work. Static hosting alone (like GitHub Pages) will not support the server API unless the backend is separately deployed.
 
