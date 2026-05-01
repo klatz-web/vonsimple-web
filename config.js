@@ -1,1 +1,1 @@
-window.BACKEND_URL = 'https://your-backend.com/api';
+window.BACKEND_URL = 'https://your-app.onrender.com';
