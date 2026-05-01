@@ -14,8 +14,8 @@ const connectDB = async () => {
       serverSelectionTimeoutMS: 10000,
       retryWrites: true,
       w: "majority",
-      ssl: true,
-      tlsAllowInvalidCertificates: false,
+      tls: true,
+      tlsInsecure: true,
     });
     console.log('MongoDB connected');
   } catch (error) {
