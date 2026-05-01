@@ -4,7 +4,15 @@ const closeBtn = document.getElementById('close');
 const authLink = document.getElementById('auth-link');
 const yearElement = document.getElementById('year');
 
-const API_BASE = '/api';
+const API_BASE = (() => {
+    if (window.BACKEND_URL) {
+        return `${window.BACKEND_URL.replace(/\/$/, '')}/api`;
+    }
+    if (window.location.protocol === 'file:') {
+        return 'http://localhost:5000/api';
+    }
+    return '/api';
+})();
 
 function getToken() {
     return localStorage.getItem('token');
@@ -69,7 +77,10 @@ async function fetchProducts() {
         if (!response.ok) throw new Error('Unable to load products');
         return await response.json();
     } catch (error) {
-        showMessage(error.message, 'error');
+        const message = error.message.includes('Failed to fetch') || error.message.includes('NetworkError')
+            ? 'Backend unavailable. Start the backend with \`npm start\` in the server folder or deploy the backend.'
+            : error.message;
+        showMessage(message, 'error');
         return [];
     }
 }
@@ -271,9 +282,12 @@ async function handleFormSubmit(event, endpoint, successRedirect) {
         showMessage(result.message, 'success');
         window.location.href = successRedirect;
     } catch (error) {
+        const message = error.message.includes('Failed to fetch') || error.message.includes('NetworkError')
+            ? 'Backend unavailable. Start the backend with `npm start` in the server folder or deploy the backend.'
+            : error.message;
         const errorBox = document.getElementById('error-message');
-        if (errorBox) errorBox.textContent = error.message;
-        showMessage(error.message, 'error');
+        if (errorBox) errorBox.textContent = message;
+        showMessage(message, 'error');
     }
 }
 

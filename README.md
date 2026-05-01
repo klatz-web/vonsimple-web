@@ -5,8 +5,8 @@ A modern ecommerce storefront with a Node.js + Express backend and MongoDB data 
 ## Secure publishing to GitHub
 
 This repository is configured so sensitive files are not committed:
-- `server/.env` is ignored.
-- `server/node_modules/` is ignored.
+- `src/.env` is ignored.
+- `src/node_modules/` is ignored.
 - All `.env*` files and `.vscode/` are ignored at the root.
 
 ## Publish to GitHub
@@ -34,9 +34,11 @@ This repository is configured so sensitive files are not committed:
   npm start
   ```
 - Frontend:
-  Open `index.html` in your browser or visit `http://localhost:5000` if backend is serving static files.
+  Open `http://localhost:5000` in your browser after the backend starts. The full app requires the backend service to be available.
+
+> Note: GitHub Pages can only host the frontend files. This project requires the Node.js backend to be running locally or deployed to a live server, because account creation, login, and product data come from the API.
 
 ## Notes
 
-- The `server/.env.example` file shows required environment variables.
+- The `src/.env.example` file shows required environment variables.
 - Confirm your MongoDB instance is running before starting the backend.

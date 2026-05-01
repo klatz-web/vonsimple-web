@@ -3,7 +3,7 @@
 ## Setup
 1. Install dependencies:
    ```bash
-   cd "d:\e commerce - Copy (3)\server"
+   cd "d:\e commerce - Copy (3)\src"
    npm install
    ```
 2. Create a `.env` file from `.env.example` and set your MongoDB connection string and JWT secret.
