@@ -169,6 +169,131 @@ button.white {
     align-items: center;
 }
 
+/* Checkout Modal Styles */
+.checkout-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.checkout-form h3 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #1B263B;
+}
+
+.checkout-form h4 {
+    margin: 20px 0 10px 0;
+    color: #A68A64;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+.checkout-form input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.checkout-form input:focus {
+    outline: none;
+    border-color: #A68A64;
+}
+
+.payment-methods {
+    margin: 15px 0;
+}
+
+.payment-methods label {
+    display: block;
+    margin: 10px 0;
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.payment-methods label:hover {
+    background-color: #f9fafc;
+}
+
+.payment-methods input[type="radio"] {
+    margin-right: 10px;
+    width: auto;
+}
+
+#gcash-details {
+    margin: 15px 0;
+}
+
+.order-summary {
+    background: #f9fafc;
+    padding: 15px;
+    border-radius: 4px;
+    margin: 20px 0;
+}
+
+.order-summary p {
+    margin: 5px 0;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.modal-actions button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.modal-actions button[type="button"] {
+    background: #ddd;
+    color: #333;
+}
+
+.modal-actions button[type="button"]:hover {
+    background: #ccc;
+}
+
+.modal-actions button[type="submit"] {
+    background: #A68A64;
+    color: white;
+}
+
+.modal-actions button[type="submit"]:hover {
+    background: #8B7355;
+}
+
 #close {
     display: none;
 }

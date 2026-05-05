@@ -10,7 +10,7 @@ const orderRoutes = require('./routes/orderRoutes');
 const Product = require('./models/Product');
 
 // Load environment variables
-dotenv.config();
+dotenv.config({ path: require('path').join(__dirname, '.env') });
 
 const app = express();
 const PORT = process.env.PORT || 5000;

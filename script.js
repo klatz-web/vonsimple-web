@@ -18,6 +18,17 @@ function getToken() {
     return localStorage.getItem('token');
 }
 
+function getUserIdFromToken(token) {
+    try {
+        // Parse JWT token to get user ID
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        return payload.id;
+    } catch (error) {
+        console.error('Error parsing token:', error);
+        return null;
+    }
+}
+
 function setToken(token) {
     localStorage.setItem('token', token);
 }
@@ -261,7 +272,157 @@ async function checkoutCart() {
         return;
     }
 
-    showMessage('Checkout feature will be available soon. Please review your cart and place orders.', 'success');
+    try {
+        // Get current cart data
+        const cartResponse = await fetch(`${API_BASE}/cart`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (!cartResponse.ok) {
+            throw new Error('Failed to load cart');
+        }
+
+        const cartData = await cartResponse.json();
+        
+        if (!cartData.items || cartData.items.length === 0) {
+            showMessage('Your cart is empty', 'error');
+            return;
+        }
+
+        // Show checkout modal with payment options
+        showCheckoutModal(cartData);
+
+    } catch (error) {
+        console.error('Checkout error:', error);
+        showMessage('Failed to load cart. Please try again.', 'error');
+    }
+}
+
+function showCheckoutModal(cartData) {
+    const modal = document.createElement('div');
+    modal.className = 'checkout-modal';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <h3>Checkout</h3>
+            <div class="checkout-form">
+                <h4>Shipping Information</h4>
+                <form id="checkout-form">
+                    <input type="text" id="fullName" placeholder="Full Name" required>
+                    <input type="text" id="address" placeholder="Address" required>
+                    <input type="text" id="city" placeholder="City" required>
+                    <input type="text" id="postalCode" placeholder="Postal Code" required>
+                    <input type="text" id="country" placeholder="Country" required>
+                    <input type="tel" id="phone" placeholder="Phone Number" required>
+                    
+                    <h4>Payment Method</h4>
+                    <div class="payment-methods">
+                        <label>
+                            <input type="radio" name="paymentMethod" value="COD" checked>
+                            Cash on Delivery (COD)
+                        </label>
+                        <label>
+                            <input type="radio" name="paymentMethod" value="GCash">
+                            GCash (Manual QR)
+                        </label>
+                    </div>
+                    
+                    <div id="gcash-details" style="display: none;">
+                        <input type="text" id="referenceNumber" placeholder="GCash Reference Number">
+                    </div>
+                    
+                    <div class="order-summary">
+                        <p><strong>Total:</strong> $${cartData.total.toFixed(2)}</p>
+                        <p><strong>Items:</strong> ${cartData.items.reduce((sum, item) => sum + item.quantity, 0)}</p>
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button type="button" onclick="closeCheckoutModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Place Order</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // Add event listeners
+    document.getElementById('checkout-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        processOrder(cartData);
+    });
+
+    // Toggle GCash reference number field
+    document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            const gcashDetails = document.getElementById('gcash-details');
+            gcashDetails.style.display = e.target.value === 'GCash' ? 'block' : 'none';
+        });
+    });
+}
+
+function closeCheckoutModal() {
+    const modal = document.querySelector('.checkout-modal');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+async function processOrder(cartData) {
+    const token = getToken();
+    const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+    
+    const orderData = {
+        user: getUserIdFromToken(token),
+        orderItems: cartData.items.map(item => ({
+            name: item.title,
+            quantity: item.quantity,
+            image: item.image,
+            price: item.price,
+            product: item.productId
+        })),
+        shippingAddress: {
+            fullName: document.getElementById('fullName').value,
+            address: document.getElementById('address').value,
+            city: document.getElementById('city').value,
+            postalCode: document.getElementById('postalCode').value,
+            country: document.getElementById('country').value,
+            phone: document.getElementById('phone').value
+        },
+        totalPrice: cartData.total,
+        paymentMethod: paymentMethod,
+        paymentDetails: paymentMethod === 'GCash' ? {
+            referenceNumber: document.getElementById('referenceNumber').value
+        } : {}
+    };
+
+    try {
+        const response = await fetch(`${API_BASE}/orders`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(orderData)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            closeCheckoutModal();
+            showMessage('Order placed successfully! Thank you for your purchase.', 'success');
+            
+            // Clear cart after successful order
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        } else {
+            showMessage(result.message || 'Failed to place order. Please try again.', 'error');
+        }
+    } catch (error) {
+        console.error('Order processing error:', error);
+        showMessage('Failed to place order. Please try again.', 'error');
+    }
 }
 
 async function handleFormSubmit(event, endpoint, successRedirect) {
