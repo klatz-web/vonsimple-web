@@ -249,26 +249,26 @@ button.white {
     margin: 15px 0;
 }
 
-.gcash-container {
+.instapay-container {
     background: #f8f9fa;
     padding: 20px;
     border-radius: 8px;
     border: 1px solid #e9ecef;
 }
 
-.gcash-instructions {
+.instapay-instructions {
     margin-bottom: 15px;
     color: #495057;
     font-size: 14px;
     text-align: center;
 }
 
-.gcash-qr-container {
+.instapay-qr-container {
     text-align: center;
     margin: 15px 0;
 }
 
-.gcash-qr {
+.instapay-qr {
     max-width: 200px;
     height: auto;
     border: 2px solid #dee2e6;
@@ -277,7 +277,7 @@ button.white {
     background: white;
 }
 
-.gcash-placeholder {
+.instapay-placeholder {
     padding: 20px;
     background: #e9ecef;
     border-radius: 8px;

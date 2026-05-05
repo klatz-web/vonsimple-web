@@ -326,15 +326,15 @@ function showCheckoutModal(cartData) {
                         </label>
                     </div>
                     
-                    <div id="gcash-details" style="display: none;">
-                        <div class="gcash-container">
-                            <p class="gcash-instructions">
-                                Scan the QR code below with your GCash app and enter the reference number:
+                    <div id="instapay-details" style="display: none;">
+                        <div class="instapay-container">
+                            <p class="instapay-instructions">
+                                Scan QR code below with your InstaPay app and enter reference number:
                             </p>
-                            <div class="gcash-qr-container">
-                                <img src="img/gcash-qr.png" alt="GCash QR Code" class="gcash-qr" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                                <div class="gcash-placeholder" style="display: none;">
-                                    <p>GCash QR Code will be displayed here</p>
+                            <div class="instapay-qr-container">
+                                <img src="img/instapay-qr.png" alt="InstaPay QR Code" class="instapay-qr" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                <div class="instapay-placeholder" style="display: none;">
+                                    <p>InstaPay QR Code will be displayed here</p>
                                 </div>
                             </div>
                             <input type="text" id="referenceNumber" placeholder="Enter 13-digit GCash Reference Number" pattern="[0-9]{13}" maxlength="13" required>
@@ -364,11 +364,11 @@ function showCheckoutModal(cartData) {
         processOrder(cartData);
     });
 
-    // Toggle GCash reference number field
+    // Toggle InstaPay reference number field
     document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
         radio.addEventListener('change', (e) => {
-            const gcashDetails = document.getElementById('gcash-details');
-            gcashDetails.style.display = e.target.value === 'GCash' ? 'block' : 'none';
+            const instapayDetails = document.getElementById('instapay-details');
+            instapayDetails.style.display = e.target.value === 'GCash' ? 'block' : 'none';
         });
     });
 }
