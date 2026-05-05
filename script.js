@@ -327,7 +327,18 @@ function showCheckoutModal(cartData) {
                     </div>
                     
                     <div id="gcash-details" style="display: none;">
-                        <input type="text" id="referenceNumber" placeholder="GCash Reference Number">
+                        <div class="gcash-container">
+                            <p class="gcash-instructions">
+                                Scan the QR code below with your GCash app and enter the reference number:
+                            </p>
+                            <div class="gcash-qr-container">
+                                <img src="img/gcash-qr.png" alt="GCash QR Code" class="gcash-qr" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                <div class="gcash-placeholder" style="display: none;">
+                                    <p>GCash QR Code will be displayed here</p>
+                                </div>
+                            </div>
+                            <input type="text" id="referenceNumber" placeholder="Enter GCash Reference Number" required>
+                        </div>
                     </div>
                     
                     <div class="order-summary">
@@ -371,6 +382,15 @@ function closeCheckoutModal() {
 async function processOrder(cartData) {
     const token = getToken();
     const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+    
+    // Frontend validation for GCash reference number
+    if (paymentMethod === 'GCash') {
+        const referenceNumber = document.getElementById('referenceNumber').value.trim();
+        if (!referenceNumber) {
+            showMessage('Reference number is required for GCash payments', 'error');
+            return;
+        }
+    }
     
     const orderData = {
         user: getUserIdFromToken(token),

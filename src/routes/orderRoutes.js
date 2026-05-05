@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Order = require('../models/Order');
+const auth = require('../middleware/auth');
 
 // @route   POST /api/orders
 // @desc    Create a new order
@@ -70,6 +71,25 @@ router.post('/', async (req, res) => {
     console.error('Order creation error:', error);
     res.status(500).json({
       message: 'Server error while creating order',
+      error: error.message
+    });
+  }
+});
+
+// @route   GET /api/orders/mine
+// @desc    Get all orders for authenticated user
+// @access  Private
+router.get('/mine', auth, async (req, res) => {
+  try {
+    const orders = await Order.find({ user: req.user.id })
+      .sort({ createdAt: -1 })
+      .populate('user', 'name email');
+
+    res.json(orders);
+  } catch (error) {
+    console.error('Get user orders error:', error);
+    res.status(500).json({
+      message: 'Server error while fetching user orders',
       error: error.message
     });
   }
