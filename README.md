@@ -17,7 +17,7 @@ This repository is configured so sensitive files are not committed:
    ```powershell
    cd "d:\e commerce - Copy (3)"
    git init
-   git add .
+   git add 
    git commit -m "Initial project commit"
    git branch -M main
    git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
@@ -29,7 +29,7 @@ This repository is configured so sensitive files are not committed:
 
 - Backend:
   ```powershell
-  cd "d:\e commerce - Copy (3)\server"
+  cd "d:\e commerce - Copy (3)"
   npm install
   npm start
   ```
