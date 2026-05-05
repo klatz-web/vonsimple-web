@@ -32,10 +32,20 @@ router.post('/', async (req, res) => {
     }
 
     // Validate GCash reference number if payment method is GCash
-    if (paymentMethod === 'GCash' && (!paymentDetails || !paymentDetails.referenceNumber)) {
-      return res.status(400).json({
-        message: 'Reference number is required for GCash payments'
-      });
+    if (paymentMethod === 'GCash') {
+      if (!paymentDetails || !paymentDetails.referenceNumber) {
+        return res.status(400).json({
+          message: 'Reference number is required for GCash payments'
+        });
+      }
+      
+      // Validate 13-digit requirement
+      const referenceNumber = paymentDetails.referenceNumber.trim();
+      if (!/^\d{13}$/.test(referenceNumber)) {
+        return res.status(400).json({
+          message: 'GCash reference number must be exactly 13 digits'
+        });
+      }
     }
 
     // Calculate total price from order items to prevent manipulation

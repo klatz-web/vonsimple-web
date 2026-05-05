@@ -285,6 +285,14 @@ button.white {
     text-align: center;
 }
 
+.reference-hint {
+    display: block;
+    margin-top: 5px;
+    color: #6c757d;
+    font-size: 12px;
+    font-style: italic;
+}
+
 .order-summary {
     background: #f9fafc;
     padding: 15px;
@@ -386,6 +394,16 @@ button.white {
 .status-pending {
     background: #f8d7da;
     color: #721c24;
+}
+
+.status-rejected {
+    background: #f5c6cb;
+    color: #842029;
+}
+
+.status-verified {
+    background: #d1ecf1;
+    color: #0c5460;
 }
 
 .order-details {
@@ -508,6 +526,34 @@ button.white {
     text-align: center;
     padding: 40px;
     color: #6c757d;
+}
+
+.rejected-message {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.rejected-message h4 {
+    color: #842029;
+    margin-bottom: 10px;
+}
+
+.rejected-message p {
+    color: #721c24;
+    margin-bottom: 0;
+}
+
+.rejected-message a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.rejected-message a:hover {
+    text-decoration: underline;
 }
 
 #close {

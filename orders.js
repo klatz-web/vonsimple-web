@@ -115,6 +115,13 @@ function displayOrders(orders) {
                     <p>${order.shippingAddress.country}</p>
                     <p>${order.shippingAddress.phone}</p>
                 </div>
+                
+                ${order.paymentVerificationStatus === 'Rejected' ? `
+                    <div class="rejected-message">
+                        <h4>Payment Rejected</h4>
+                        <p>Your GCash payment could not be verified. Please contact support at <a href="mailto:help@iceearring.com">help@iceearring.com</a> for assistance.</p>
+                    </div>
+                ` : ''}
             </div>
         `;
     }).join('');
@@ -131,8 +138,12 @@ function getOrderStatus(order) {
         return 'Paid';
     }
     
+    if (order.paymentVerificationStatus === 'Rejected') {
+        return 'Rejected';
+    }
+    
     if (order.paymentMethod === 'GCash' && order.paymentDetails && order.paymentDetails.referenceNumber) {
-        return 'Verifying';
+        return order.paymentVerificationStatus === 'Verified' ? 'Verified' : 'Verifying';
     }
     
     if (order.paymentMethod === 'COD') {
@@ -147,8 +158,12 @@ function getStatusClass(order) {
         return 'status-paid';
     }
     
+    if (order.paymentVerificationStatus === 'Rejected') {
+        return 'status-rejected';
+    }
+    
     if (order.paymentMethod === 'GCash' && order.paymentDetails && order.paymentDetails.referenceNumber) {
-        return 'status-verifying';
+        return order.paymentVerificationStatus === 'Verified' ? 'status-verified' : 'status-verifying';
     }
     
     if (order.paymentMethod === 'COD') {

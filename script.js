@@ -337,7 +337,8 @@ function showCheckoutModal(cartData) {
                                     <p>GCash QR Code will be displayed here</p>
                                 </div>
                             </div>
-                            <input type="text" id="referenceNumber" placeholder="Enter GCash Reference Number" required>
+                            <input type="text" id="referenceNumber" placeholder="Enter 13-digit GCash Reference Number" pattern="[0-9]{13}" maxlength="13" required>
+                            <small class="reference-hint">Must be exactly 13 digits</small>
                         </div>
                     </div>
                     
@@ -388,6 +389,10 @@ async function processOrder(cartData) {
         const referenceNumber = document.getElementById('referenceNumber').value.trim();
         if (!referenceNumber) {
             showMessage('Reference number is required for GCash payments', 'error');
+            return;
+        }
+        if (referenceNumber.length !== 13 || !/^\d{13}$/.test(referenceNumber)) {
+            showMessage('GCash reference number must be exactly 13 digits', 'error');
             return;
         }
     }
