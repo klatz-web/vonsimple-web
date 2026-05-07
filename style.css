@@ -528,6 +528,42 @@ button.white {
     color: #6c757d;
 }
 
+/* Coming Soon Badge Styling */
+.coming-soon {
+    position: relative;
+}
+
+.coming-soon-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #A68A64;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.no-image {
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 250px;
+    border-radius: 4px;
+}
+
+.no-image::after {
+    content: 'Image Coming Soon';
+    color: #6c757d;
+    font-size: 14px;
+    font-style: italic;
+}
+
 .rejected-message {
     background: #f8d7da;
     border: 1px solid #f5c6cb;
