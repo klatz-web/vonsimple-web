@@ -1,7 +1,10 @@
 // Orders page script for fetching and displaying user transactions
 
+let allOrders = []; // Store all orders for filtering
+
 document.addEventListener('DOMContentLoaded', function() {
     checkAuthAndLoadOrders();
+    setupFilterListener();
 });
 
 async function checkAuthAndLoadOrders() {
@@ -14,6 +17,15 @@ async function checkAuthAndLoadOrders() {
     // Update navbar to show logged in user
     updateAuthUI();
     loadOrders();
+}
+
+function setupFilterListener() {
+    const statusFilter = document.getElementById('statusFilter');
+    if (statusFilter) {
+        statusFilter.addEventListener('change', () => {
+            filterOrders();
+        });
+    }
 }
 
 async function loadOrders() {
@@ -32,6 +44,7 @@ async function loadOrders() {
         }
 
         const orders = await response.json();
+        allOrders = orders; // Store all orders
         displayOrders(orders);
 
     } catch (error) {
@@ -41,6 +54,21 @@ async function loadOrders() {
                 <p>Failed to load your orders. Please try again later.</p>
             </div>
         `;
+    }
+}
+
+function filterOrders() {
+    const statusFilter = document.getElementById('statusFilter');
+    const filterValue = statusFilter ? statusFilter.value : 'all';
+    
+    if (filterValue === 'all') {
+        displayOrders(allOrders);
+    } else {
+        const filteredOrders = allOrders.filter(order => {
+            const status = getOrderStatus(order).toLowerCase();
+            return status === filterValue;
+        });
+        displayOrders(filteredOrders);
     }
 }
 
@@ -62,6 +90,7 @@ function displayOrders(orders) {
         const orderDate = new Date(order.createdAt).toLocaleDateString();
         const orderStatus = getOrderStatus(order);
         const statusClass = getStatusClass(order);
+        const statusTimeline = getStatusTimeline(order);
 
         return `
             <div class="order-card">
@@ -74,6 +103,10 @@ function displayOrders(orders) {
                         <span class="status-badge ${statusClass}">${orderStatus}</span>
                     </div>
                 </div>
+
+                <div class="order-timeline">
+                    ${statusTimeline}
+                </div>
                 
                 <div class="order-details">
                     <div class="order-items">
@@ -83,7 +116,7 @@ function displayOrders(orders) {
                                 <div class="item-details">
                                     <h4>${item.name}</h4>
                                     <p>Quantity: ${item.quantity}</p>
-                                    <p class="item-price">$${item.price.toFixed(2)}</p>
+                                    <p class="item-price">₱${item.price.toFixed(2)}</p>
                                 </div>
                             </div>
                         `).join('')}
@@ -96,7 +129,7 @@ function displayOrders(orders) {
                         </div>
                         <div class="summary-row">
                             <span>Total Amount:</span>
-                            <span class="total-amount">$${order.totalPrice.toFixed(2)}</span>
+                            <span class="total-amount">₱${order.totalPrice.toFixed(2)}</span>
                         </div>
                         ${order.paymentDetails && order.paymentDetails.referenceNumber ? `
                             <div class="summary-row">
@@ -171,4 +204,54 @@ function getStatusClass(order) {
     }
     
     return 'status-pending';
+}
+
+function getStatusTimeline(order) {
+    const steps = [
+        { name: 'Order Placed', status: 'completed' },
+        { name: 'Payment', status: 'pending' },
+        { name: 'Processing', status: 'pending' },
+        { name: 'Shipped', status: 'pending' },
+        { name: 'Delivered', status: 'pending' }
+    ];
+
+    // Determine current step based on order status
+    const orderStatus = getOrderStatus(order);
+    
+    if (orderStatus === 'Rejected') {
+        steps[1].status = 'rejected';
+    } else if (orderStatus === 'Paid') {
+        steps[0].status = 'completed';
+        steps[1].status = 'completed';
+        steps[2].status = 'completed';
+        steps[3].status = 'in-progress';
+    } else if (orderStatus === 'Verified') {
+        steps[0].status = 'completed';
+        steps[1].status = 'completed';
+        steps[2].status = 'in-progress';
+    } else if (orderStatus === 'Verifying') {
+        steps[0].status = 'completed';
+        steps[1].status = 'in-progress';
+    } else if (orderStatus === 'Pending Delivery') {
+        steps[0].status = 'completed';
+        steps[1].status = 'completed';
+        steps[2].status = 'completed';
+        steps[3].status = 'in-progress';
+    }
+
+    return `
+        <div class="timeline">
+            ${steps.map((step, index) => `
+                <div class="timeline-step ${step.status}">
+                    <div class="timeline-icon">
+                        ${step.status === 'completed' ? '<i class="fa fa-check"></i>' : 
+                          step.status === 'in-progress' ? '<i class="fa fa-spinner fa-spin"></i>' :
+                          step.status === 'rejected' ? '<i class="fa fa-times"></i>' : 
+                          '<i class="fa fa-circle"></i>'}
+                    </div>
+                    <div class="timeline-label">${step.name}</div>
+                </div>
+            `).join('')}
+        </div>
+    `;
 }

@@ -657,6 +657,149 @@ button.white {
     margin-bottom: 15px;
 }
 
+/* Orders Controls Styling */
+.orders-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.filter-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-section label {
+    font-weight: 600;
+    color: #333;
+}
+
+.filter-section select {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    background: white;
+    cursor: pointer;
+}
+
+.filter-section select:hover {
+    border-color: #A68A64;
+}
+
+.refresh-section button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Order Timeline Styling */
+.order-timeline {
+    margin: 20px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.timeline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #e0e0e0;
+    z-index: 0;
+}
+
+.timeline-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    flex: 1;
+}
+
+.timeline-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: #999;
+    margin-bottom: 8px;
+    transition: all 0.3s ease;
+}
+
+.timeline-label {
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* Timeline Step States */
+.timeline-step.completed .timeline-icon {
+    background: #28a745;
+    border-color: #28a745;
+    color: white;
+}
+
+.timeline-step.completed .timeline-label {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.timeline-step.in-progress .timeline-icon {
+    background: #A68A64;
+    border-color: #A68A64;
+    color: white;
+    animation: pulse 1.5s infinite;
+}
+
+.timeline-step.in-progress .timeline-label {
+    color: #A68A64;
+    font-weight: 600;
+}
+
+.timeline-step.rejected .timeline-icon {
+    background: #dc3545;
+    border-color: #dc3545;
+    color: white;
+}
+
+.timeline-step.rejected .timeline-label {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(166, 138, 100, 0.4);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(166, 138, 100, 0);
+    }
+}
+
 /* Coming Soon Badge Styling */
 .coming-soon {
     position: relative;

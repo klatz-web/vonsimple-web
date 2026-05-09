@@ -38,6 +38,24 @@
     </section>
 
     <section class="section-p1">
+        <div class="orders-controls">
+            <div class="filter-section">
+                <label>Filter by Status:</label>
+                <select id="statusFilter">
+                    <option value="all">All Orders</option>
+                    <option value="pending">Pending</option>
+                    <option value="verifying">Verifying</option>
+                    <option value="verified">Verified</option>
+                    <option value="paid">Paid</option>
+                    <option value="rejected">Rejected</option>
+                </select>
+            </div>
+            <div class="refresh-section">
+                <button class="btn btn-secondary" onclick="loadOrders()">
+                    <i class="fa fa-refresh"></i> Refresh
+                </button>
+            </div>
+        </div>
         <div id="orders-container">
             <div class="loading">Loading your orders...</div>
         </div>
