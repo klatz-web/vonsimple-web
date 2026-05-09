@@ -149,4 +149,42 @@ router.get('/user/:userId', async (req, res) => {
   }
 });
 
+// @route   PUT /api/orders/:id/status
+// @desc    Update order verification status
+// @access  Admin
+router.put('/:id/status', auth, adminAuth, async (req, res) => {
+  try {
+    const { paymentVerificationStatus } = req.body;
+    
+    if (!paymentVerificationStatus) {
+      return res.status(400).json({ message: 'Payment verification status is required' });
+    }
+
+    const validStatuses = ['Pending', 'Verified', 'Rejected'];
+    if (!validStatuses.includes(paymentVerificationStatus)) {
+      return res.status(400).json({ message: 'Invalid status' });
+    }
+
+    const order = await Order.findById(req.params.id);
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    order.paymentVerificationStatus = paymentVerificationStatus;
+    
+    // If verified, mark as paid
+    if (paymentVerificationStatus === 'Verified') {
+      order.isPaid = true;
+      order.paidAt = new Date();
+    }
+
+    await order.save();
+
+    res.json({ message: 'Order status updated successfully', order });
+  } catch (error) {
+    console.error('Update order status error:', error);
+    res.status(500).json({ message: 'Unable to update order status' });
+  }
+});
+
 module.exports = router;

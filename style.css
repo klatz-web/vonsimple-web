@@ -644,6 +644,26 @@ button.white {
     font-size: 12px;
 }
 
+.status-select {
+    padding: 5px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 12px;
+    background: white;
+    cursor: pointer;
+    min-width: 120px;
+}
+
+.status-select:hover {
+    border-color: #A68A64;
+}
+
+.status-select:focus {
+    outline: none;
+    border-color: #A68A64;
+    box-shadow: 0 0 0 2px rgba(166, 138, 100, 0.2);
+}
+
 .error-message {
     background: #f8d7da;
     border: 1px solid #f5c6cb;

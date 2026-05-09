@@ -165,6 +165,7 @@ function displayOrders(orders) {
                     <th>Total</th>
                     <th>Payment Method</th>
                     <th>Status</th>
+                    <th>Update Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -182,6 +183,14 @@ function displayOrders(orders) {
                             <td>₱${order.totalPrice.toFixed(2)}</td>
                             <td>${order.paymentMethod}</td>
                             <td><span class="status-badge ${statusClass}">${status}</span></td>
+                            <td>
+                                <select class="status-select" onchange="updateOrderStatus('${order._id}', this.value)">
+                                    <option value="" disabled selected>Change Status</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Verified">Verified</option>
+                                    <option value="Rejected">Rejected</option>
+                                </select>
+                            </td>
                             <td>
                                 <button class="btn btn-secondary btn-sm" onclick="viewOrderDetails('${order._id}')">View</button>
                             </td>
@@ -230,6 +239,49 @@ function viewOrderDetails(orderId) {
     // For now, just alert the order ID
     // In the future, this could open a modal with full order details
     alert(`Viewing order: ${orderId}\n\nFull order details modal coming soon!`);
+}
+
+async function updateOrderStatus(orderId, newStatus) {
+    if (!newStatus) return;
+    
+    const confirmed = confirm(`Are you sure you want to change this order status to "${newStatus}"?`);
+    if (!confirmed) {
+        // Reset the select dropdown
+        event.target.value = '';
+        return;
+    }
+
+    const token = getToken();
+    if (!token) {
+        alert('You must be logged in to update order status');
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_BASE}/orders/${orderId}/status`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ paymentVerificationStatus: newStatus })
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to update order status');
+        }
+
+        const data = await response.json();
+        alert(`Order status updated successfully to ${newStatus}`);
+        
+        // Reload orders to reflect the change
+        loadAllOrders();
+    } catch (error) {
+        console.error('Update order status error:', error);
+        alert('Failed to update order status. Please try again.');
+        // Reset the select dropdown
+        event.target.value = '';
+    }
 }
 
 // Initialize
