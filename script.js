@@ -355,8 +355,8 @@ function showCheckoutModal(cartData) {
                     </div>
                     
                     <div class="modal-actions">
-                        <button type="button" onclick="closeCheckoutModal()">Cancel</button>
-                        <button type="button" onclick="processOrder(cartData)" class="btn btn-primary">Place Order</button>
+                        <button type="button" id="cancel-btn">Cancel</button>
+                        <button type="button" id="place-order-btn" class="btn btn-primary">Place Order</button>
                     </div>
                 </form>
             </div>
@@ -364,6 +364,10 @@ function showCheckoutModal(cartData) {
     `;
 
     document.body.appendChild(modal);
+
+    // Add event listeners
+    document.getElementById('cancel-btn').addEventListener('click', closeCheckoutModal);
+    document.getElementById('place-order-btn').addEventListener('click', () => processOrder(cartData));
 
     // Toggle InstaPay reference number field
     document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
