@@ -7,10 +7,9 @@ const adminAuth = require('../middleware/admin');
 // @route   POST /api/orders
 // @desc    Create a new order
 // @access  Private
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
   try {
     const {
-      user,
       orderItems,
       shippingAddress,
       totalPrice,
@@ -18,10 +17,13 @@ router.post('/', async (req, res) => {
       paymentDetails
     } = req.body;
 
+    // Use authenticated user ID from middleware
+    const user = req.user.id;
+
     // Validate required fields
-    if (!user || !orderItems || orderItems.length === 0 || !shippingAddress || !totalPrice || !paymentMethod) {
+    if (!orderItems || orderItems.length === 0 || !shippingAddress || !totalPrice || !paymentMethod) {
       return res.status(400).json({
-        message: 'Missing required fields: user, orderItems, shippingAddress, totalPrice, paymentMethod'
+        message: 'Missing required fields: orderItems, shippingAddress, totalPrice, paymentMethod'
       });
     }
 

@@ -416,7 +416,6 @@ async function processOrder(cartData) {
     }
     
     const orderData = {
-        user: getUserIdFromToken(token),
         orderItems: cartData.items.map(item => ({
             name: item.title,
             quantity: item.quantity,
