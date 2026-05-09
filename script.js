@@ -205,9 +205,9 @@ async function displayCart() {
                                 <strong>${item.title}</strong><br>
                                 <span>${item.category}</span>
                             </td>
-                            <td>$${item.price.toFixed(2)}</td>
+                            <td>₱${item.price.toFixed(2)}</td>
                             <td><input type="number" min="1" value="${item.quantity}" onchange="updateCartItem('${item.productId}', this.value)"></td>
-                            <td>$${(item.price * item.quantity).toFixed(2)}</td>
+                            <td>₱${(item.price * item.quantity).toFixed(2)}</td>
                             <td><button class="btn btn-secondary" onclick="removeCartItem('${item.productId}')">Remove</button></td>
                         </tr>
                     `).join('')}
@@ -219,7 +219,7 @@ async function displayCart() {
             cartSummary.innerHTML = `
                 <div class="card">
                     <h3>Order Summary</h3>
-                    <p><strong>Subtotal:</strong> $${data.total.toFixed(2)}</p>
+                    <p><strong>Subtotal:</strong> ₱${data.total.toFixed(2)}</p>
                     <p><strong>Items:</strong> ${items.reduce((sum, item) => sum + item.quantity, 0)}</p>
                     <button class="btn btn-primary" onclick="checkoutCart()">Proceed to Checkout</button>
                 </div>
@@ -350,7 +350,7 @@ function showCheckoutModal(cartData) {
                     </div>
                     
                     <div class="order-summary">
-                        <p><strong>Total:</strong> $${cartData.total.toFixed(2)}</p>
+                        <p><strong>Total:</strong> ₱${cartData.total.toFixed(2)}</p>
                         <p><strong>Items:</strong> ${cartData.items.reduce((sum, item) => sum + item.quantity, 0)}</p>
                     </div>
                     
