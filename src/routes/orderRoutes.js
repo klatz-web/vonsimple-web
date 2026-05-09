@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Order = require('../models/Order');
 const auth = require('../middleware/auth');
+const adminAuth = require('../middleware/admin');
 
 // @route   POST /api/orders
 // @desc    Create a new order
@@ -99,7 +100,7 @@ router.get('/mine', auth, async (req, res) => {
 });
 
 // Admin route to fetch all orders
-router.get('/all', auth, async (req, res) => {
+router.get('/all', auth, adminAuth, async (req, res) => {
   try {
     const orders = await Order.find().sort({ createdAt: -1 }).populate('user', 'name email');
     res.json(orders);

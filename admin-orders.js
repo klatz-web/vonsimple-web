@@ -78,6 +78,28 @@ function getCustomerEmail(order) {
     return 'N/A';
 }
 
+async function checkAdminStatus() {
+    const token = getToken();
+    if (!token) {
+        return false;
+    }
+
+    try {
+        const response = await fetch(`${API_BASE}/auth/check-admin`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (!response.ok) {
+            return false;
+        }
+
+        const data = await response.json();
+        return data.isAdmin;
+    } catch (error) {
+        return false;
+    }
+}
+
 async function loadAllOrders() {
     const token = getToken();
     if (!token) {
@@ -85,6 +107,19 @@ async function loadAllOrders() {
             <div class="error-message">
                 <p>Please login to view admin orders.</p>
                 <a href="login.html" class="btn btn-primary">Login</a>
+            </div>
+        `;
+        return;
+    }
+
+    // Check if user is admin
+    const isAdmin = await checkAdminStatus();
+    if (!isAdmin) {
+        document.getElementById('orders-table').innerHTML = `
+            <div class="error-message">
+                <p><strong>Access Denied</strong></p>
+                <p>You don't have permission to view admin orders.</p>
+                <a href="index.html" class="btn btn-primary">Return to Home</a>
             </div>
         `;
         return;
