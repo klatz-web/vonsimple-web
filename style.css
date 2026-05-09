@@ -528,6 +528,135 @@ button.white {
     color: #6c757d;
 }
 
+/* Admin Orders Dashboard Styling */
+.admin-orders-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.admin-controls {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.filter-section,
+.search-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-section label {
+    font-weight: 600;
+    color: #333;
+}
+
+.filter-section select,
+.search-section input {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.search-section input {
+    width: 300px;
+}
+
+.admin-orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.admin-orders-table thead {
+    background: #A68A64;
+    color: white;
+}
+
+.admin-orders-table th {
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.admin-orders-table tbody tr {
+    border-bottom: 1px solid #eee;
+}
+
+.admin-orders-table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+.admin-orders-table td {
+    padding: 15px;
+    font-size: 14px;
+}
+
+.admin-orders-table small {
+    font-size: 12px;
+    color: #666;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-paid {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-verified {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.status-verifying {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-rejected {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.status-pending {
+    background: #e2e3e5;
+    color: #383d41;
+}
+
+.btn-sm {
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+.error-message {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    color: #721c24;
+}
+
+.error-message p {
+    margin-bottom: 15px;
+}
+
 /* Coming Soon Badge Styling */
 .coming-soon {
     position: relative;

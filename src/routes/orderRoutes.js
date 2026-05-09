@@ -91,17 +91,20 @@ router.post('/', async (req, res) => {
 // @access  Private
 router.get('/mine', auth, async (req, res) => {
   try {
-    const orders = await Order.find({ user: req.user.id })
-      .sort({ createdAt: -1 })
-      .populate('user', 'name email');
-
+    const orders = await Order.find({ user: req.user.id }).sort({ createdAt: -1 });
     res.json(orders);
   } catch (error) {
-    console.error('Get user orders error:', error);
-    res.status(500).json({
-      message: 'Server error while fetching user orders',
-      error: error.message
-    });
+    res.status(500).json({ message: 'Unable to fetch orders' });
+  }
+});
+
+// Admin route to fetch all orders
+router.get('/all', auth, async (req, res) => {
+  try {
+    const orders = await Order.find().sort({ createdAt: -1 }).populate('user', 'name email');
+    res.json(orders);
+  } catch (error) {
+    res.status(500).json({ message: 'Unable to fetch all orders' });
   }
 });
 
