@@ -104,22 +104,29 @@ async function renderShop() {
         productGrid.innerHTML = '<p class="empty-state">No products available yet. Please come back later.</p>';
         return;
     }
-    productGrid.innerHTML = products.map((product) => `
-        <div class="product-card">
-            <img src="${product.image}" alt="${product.title}">
+    
+    // Products with missing images
+    const missingImages = ['n6.png', 'n7.png', 'n8.png'];
+    
+    productGrid.innerHTML = products.map((product) => {
+        const isComingSoon = missingImages.some(img => product.image.includes(img));
+        return `
+        <div class="product-card ${isComingSoon ? 'coming-soon' : ''}">
+            <img src="${product.image}" alt="${product.title}" onerror="this.style.display='none'; this.parentElement.classList.add('no-image');">
+            ${isComingSoon ? '<div class="coming-soon-badge">COMING SOON</div>' : ''}
             <div class="des">
                 <span>${product.category}</span>
                 <h5>${product.title}</h5>
                 <div class="star">
                     ${'<i class="fa-solid fa-star"></i>'.repeat(5)}
                 </div>
-                <h4>$${product.price.toFixed(2)}</h4>
+                <h4>₱${product.price.toFixed(2)}</h4>
             </div>
             <div class="actions">
                 <button class="btn btn-secondary" onclick="addToCart('${product._id}')">Add to Cart</button>
             </div>
         </div>
-    `).join('');
+    `}).join('');
 }
 
 async function addToCart(productId) {
