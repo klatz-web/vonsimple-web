@@ -161,7 +161,7 @@ function displayOrders(orders) {
                     <th>Customer</th>
                     <th>Email</th>
                     <th>Date</th>
-                    <th>Items</th>
+                    <th>Products</th>
                     <th>Total</th>
                     <th>Payment Method</th>
                     <th>Status</th>
@@ -179,7 +179,19 @@ function displayOrders(orders) {
                             <td><strong>${getCustomerName(order)}</strong></td>
                             <td><small>${getCustomerEmail(order)}</small></td>
                             <td><small>${formatDate(order.createdAt)}</small></td>
-                            <td>${order.orderItems.length} items</td>
+                            <td>
+                                <div class="order-products">
+                                    ${order.orderItems.map(item => `
+                                        <div class="product-mini">
+                                            <img src="${item.image}" alt="${item.name}" class="product-thumb">
+                                            <div class="product-info">
+                                                <span class="product-name">${item.name}</span>
+                                                <span class="product-qty">x${item.quantity}</span>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </td>
                             <td>₱${order.totalPrice.toFixed(2)}</td>
                             <td>${order.paymentMethod}</td>
                             <td><span class="status-badge ${statusClass}">${status}</span></td>
