@@ -344,7 +344,7 @@ function showCheckoutModal(cartData) {
                                     <p>InstaPay QR Code will be displayed here</p>
                                 </div>
                             </div>
-                            <input type="text" id="referenceNumber" placeholder="Enter 13-digit GCash Reference Number" pattern="[0-9]{13}" maxlength="13" required>
+                            <input type="text" id="referenceNumber" placeholder="Enter 13-digit GCash Reference Number" pattern="[0-9]{13}" maxlength="13">
                             <small class="reference-hint">Must be exactly 13 digits</small>
                         </div>
                     </div>
@@ -356,7 +356,7 @@ function showCheckoutModal(cartData) {
                     
                     <div class="modal-actions">
                         <button type="button" onclick="closeCheckoutModal()">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Place Order</button>
+                        <button type="button" onclick="processOrder(cartData)" class="btn btn-primary">Place Order</button>
                     </div>
                 </form>
             </div>
@@ -364,12 +364,6 @@ function showCheckoutModal(cartData) {
     `;
 
     document.body.appendChild(modal);
-
-    // Add event listeners
-    document.getElementById('checkout-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        processOrder(cartData);
-    });
 
     // Toggle InstaPay reference number field
     document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
@@ -390,6 +384,19 @@ function closeCheckoutModal() {
 async function processOrder(cartData) {
     const token = getToken();
     const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+    
+    // Manual form validation
+    const fullName = document.getElementById('fullName').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const city = document.getElementById('city').value.trim();
+    const postalCode = document.getElementById('postalCode').value.trim();
+    const country = document.getElementById('country').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    
+    if (!fullName || !address || !city || !postalCode || !country || !phone) {
+        showMessage('Please fill in all shipping information fields', 'error');
+        return;
+    }
     
     // Frontend validation for GCash reference number
     if (paymentMethod === 'GCash') {
@@ -414,12 +421,12 @@ async function processOrder(cartData) {
             product: item.productId
         })),
         shippingAddress: {
-            fullName: document.getElementById('fullName').value,
-            address: document.getElementById('address').value,
-            city: document.getElementById('city').value,
-            postalCode: document.getElementById('postalCode').value,
-            country: document.getElementById('country').value,
-            phone: document.getElementById('phone').value
+            fullName: fullName,
+            address: address,
+            city: city,
+            postalCode: postalCode,
+            country: country,
+            phone: phone
         },
         totalPrice: cartData.total,
         paymentMethod: paymentMethod,
