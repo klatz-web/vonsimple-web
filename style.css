@@ -639,6 +639,11 @@ button.white {
     color: #383d41;
 }
 
+.status-delivered {
+    background: #28a745;
+    color: white;
+}
+
 .btn-sm {
     padding: 5px 10px;
     font-size: 12px;

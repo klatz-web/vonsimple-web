@@ -13,6 +13,10 @@ function getToken() {
 }
 
 function getOrderStatus(order) {
+    if (order.paymentVerificationStatus === 'Delivered') {
+        return 'Delivered';
+    }
+    
     if (order.isPaid) {
         return 'Paid';
     }
@@ -42,6 +46,8 @@ function getStatusClass(status) {
             return 'status-verifying';
         case 'rejected':
             return 'status-rejected';
+        case 'delivered':
+            return 'status-delivered';
         case 'pending':
         case 'pending delivery':
             return 'status-pending';
@@ -201,6 +207,7 @@ function displayOrders(orders) {
                                     <option value="Pending">Pending</option>
                                     <option value="Verified">Verified</option>
                                     <option value="Rejected">Rejected</option>
+                                    <option value="Delivered">Delivered</option>
                                 </select>
                             </td>
                             <td>

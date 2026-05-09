@@ -160,7 +160,7 @@ router.put('/:id/status', auth, adminAuth, async (req, res) => {
       return res.status(400).json({ message: 'Payment verification status is required' });
     }
 
-    const validStatuses = ['Pending', 'Verified', 'Rejected'];
+    const validStatuses = ['Pending', 'Verified', 'Rejected', 'Delivered'];
     if (!validStatuses.includes(paymentVerificationStatus)) {
       return res.status(400).json({ message: 'Invalid status' });
     }
