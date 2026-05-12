@@ -9,56 +9,56 @@ const products = [
   {
     title: 'Aethel Snowpearl',
     category: 'Fashion-Jewelry',
-    price: 89,
+    price: 109,
     image: 'img/products/f1.png',
     description: 'Elegant snow pearl earrings with modern design'
   },
   {
     title: 'Evelyn Pearl',
     category: 'Fashion-Jewelry',
-    price: 86,
+    price: 106,
     image: 'img/products/f2.png',
     description: 'Classic pearl earrings for everyday elegance'
   },
   {
     title: 'Heidiao',
     category: 'Fashion-Jewelry',
-    price: 79,
+    price: 99,
     image: 'img/products/f3.png',
     description: 'Stylish fashion jewelry for modern women'
   },
   {
     title: 'Lea & Co.',
     category: 'Fashion-Jewelry',
-    price: 79,
+    price: 99,
     image: 'img/products/f4.png',
     description: 'Premium fashion jewelry collection'
   },
   {
     title: 'Aurelia',
     category: 'Fashion-Jewelry',
-    price: 79,
+    price: 99,
     image: 'img/products/f5.png',
     description: 'Beautiful earrings inspired by golden dawn'
   },
   {
     title: 'Aethel & Co.',
     category: 'Fashion-Jewelry',
-    price: 89,
+    price: 109,
     image: 'img/products/f6.png',
     description: 'Premium fashion jewelry with contemporary design'
   },
   {
     title: 'Chrystalis & Co.',
     category: 'Fashion-Jewelry',
-    price: 79,
+    price: 99,
     image: 'img/products/f7.png',
     description: 'Crystal-inspired jewelry collection'
   },
   {
     title: 'Aurelia',
     category: 'Fashion-Jewelry',
-    price: 49,
+    price: 69,
     image: 'img/products/f8.png',
     description: 'Affordable fashion jewelry for everyday wear'
   },
@@ -66,56 +66,56 @@ const products = [
   {
     title: 'Arctic Halo Studs',
     category: 'Men-Jewelry',
-    price: 129,
+    price: 149,
     image: 'img/products/n1.png',
     description: 'Arctic-inspired stud earrings for men'
   },
   {
     title: 'Lucid Stud',
     category: 'Men-Jewelry',
-    price: 99,
+    price: 119,
     image: 'img/products/n2.png',
     description: 'Clear and elegant stud earrings'
   },
   {
     title: 'Aura Heart Studs',
     category: 'Men-Jewelry',
-    price: 129,
+    price: 149,
     image: 'img/products/n3.png',
     description: 'Heart-shaped stud earrings with aura design'
   },
   {
     title: 'Tundra Spark Squares',
     category: 'Men-Jewelry',
-    price: 169,
+    price: 189,
     image: 'img/products/n4.png',
     description: 'Square stud earrings inspired by tundra'
   },
   {
     title: 'Lumina Star Studs',
     category: 'Men-Jewelry',
-    price: 99,
+    price: 119,
     image: 'img/products/n5.png',
     description: 'Star-shaped stud earrings with luminous design'
   },
   {
     title: 'Gold Earring',
     category: 'Men-Jewelry',
-    price: 99,
+    price: 119,
     image: 'img/products/n6.png',
     description: 'Classic gold earring for men'
   },
   {
     title: 'Gold Earring',
     category: 'Men-Jewelry',
-    price: 78,
+    price: 98,
     image: 'img/products/n7.png',
     description: 'Elegant gold earring for men'
   },
   {
     title: 'Gold Earring',
     category: 'Men-Jewelry',
-    price: 78,
+    price: 98,
     image: 'img/products/n8.png',
     description: 'Premium gold earring for men'
   }
